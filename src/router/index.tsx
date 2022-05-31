@@ -1,19 +1,34 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import LayoutComponent from "../pages/layout";
-import Home from "../pages";
-import Shopping from "../pages/shopping";
+import React, { lazy, ReactElement } from "react";
+import { useRoutes } from "react-router-dom";
 
-const AppRoutes = (props: any) => {
-  console.log(props, "zouguo...");
-  return (
-    <Routes>
-      <Route path="/" element={<LayoutComponent />}>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/shopping" element={<Shopping />}></Route>
-      </Route>
-    </Routes>
-  );
+const LayoutComponent = lazy(() => import('../pages/layout'));
+const Home = lazy(() => import('../pages'));
+const Shopping = lazy(() => import('../pages/shopping'));
+const Login = lazy(() => import('../pages/login'));
+
+const MainRoutes:React.FC = () => {
+  const routers = useRoutes([
+    {
+      path: '/',
+      element: <LayoutComponent />,
+      children: [
+        {
+          index: true,
+          path: '/',
+          element: <Login />,
+        },
+        {
+          path: '/index',
+          element: <Home />,
+        },
+        {
+          path: '/shop',
+          element: <Shopping />,
+        }
+      ],
+    },
+  ]);
+  return routers;
 };
 
-export default AppRoutes;
+export default MainRoutes;
