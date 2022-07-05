@@ -1,0 +1,37 @@
+.input-group-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .input-group-item {
+    display: block;
+    flex: 1;
+  }
+
+  .input-group-center {
+    background-color: var(--xc-component-background);
+    width: 40px;
+    border-left: 0;
+    border-right: 0;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  .input-group-right {
+    border-left-width: 0;
+  }
+
+  .input-group-right:hover,
+  .input-group-right:focus {
+    border-left-width: 1px;
+  }
+
+  .input-group-left {
+    border-right-width: 0;
+  }
+
+  .input-group-left:hover,
+  .input-group-left:focus {
+    border-right-width: 1px;
+  }
+}

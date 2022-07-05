@@ -39,28 +39,32 @@ const EditableCell: React.FC<EditableCellProps> = ({
   dataIndex,
   // title,
   controlType,
-  // record,
+  record,
   controlProps,
   dictProps,
   itemProps,
   // index,
   children,
   ...restProps
-}) => (
-  <td {...restProps}>
-    {editing ? (
-      <Form.Item name={dataIndex} style={{ margin: 0 }} {...itemProps}>
-        <ItemControl
-          type={controlType}
-          controlProps={controlProps}
-          dictProps={dictProps}
-        />
-      </Form.Item>
-    ) : (
-      children
-    )}
-  </td>
-);
+}) => {
+  const nameObje = !dataIndex ? {} : { name: dataIndex };
+  return (
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item {...nameObje} style={{ margin: 0 }} {...itemProps}>
+          <ItemControl
+            type={controlType}
+            controlProps={controlProps}
+            dictProps={dictProps}
+            data={record}
+          />
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
+  );
+};
 
 interface ITableProps {
   tableColumn: any[];
@@ -68,12 +72,12 @@ interface ITableProps {
   name?: string;
   handleSave?: Function;
   handleDel?: Function;
+  changeTableData?: Function;
   isOutStyle?: boolean;
   bodyRow?: ReactNode;
   onRow?: Function;
   addTableRowProps?: {
     isAddBtn: boolean;
-    addClick: Function;
     addClassName?: string;
     addText?: string;
     addDisabled?: boolean;
@@ -86,13 +90,14 @@ const EditFormTable: React.FC<ITableProps> = (props) => {
     handleSave,
     handleDel = () => {},
     tableData,
+    changeTableData = () => {},
     name,
     isOutStyle,
     bodyRow,
     onRow = () => {},
     addTableRowProps,
   } = props;
-  const { isAddBtn, addClick, addClassName, addText, addDisabled } =
+  const { isAddBtn, addClassName, addText, addDisabled } =
     addTableRowProps || {};
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<ID>(null);
@@ -106,7 +111,13 @@ const EditFormTable: React.FC<ITableProps> = (props) => {
     setEditingKey(record.id);
   };
 
-  const cancel = () => {
+  const cancel = (id: ID) => {
+    if (typeof id === 'string') {
+      changeTableData({
+        type: 'CHANGE_DATA',
+        payload: { data: tableData.filter((item: any) => item.id !== id) },
+      });
+    }
     resetFields();
     setEditingKey(null);
   };
@@ -135,7 +146,7 @@ const EditFormTable: React.FC<ITableProps> = (props) => {
         return editable ? (
           <span>
             <OptionButton onClick={() => save(record)} text="保存" />
-            <OptionButton onClick={cancel} text="取消" />
+            <OptionButton onClick={() => cancel(record.id)} text="取消" />
           </span>
         ) : (
           <span>
@@ -157,9 +168,17 @@ const EditFormTable: React.FC<ITableProps> = (props) => {
   ];
 
   const handleAddClick = () => {
-    if (addClick) {
-      addClick();
-    }
+    const newItemId = 'new_child';
+    const newData = [
+      ...tableData,
+      {
+        id: newItemId,
+      },
+    ];
+    changeTableData({
+      type: 'CHANGE_DATA',
+      payload: { data: newData },
+    });
     setEditingKey('new_child');
   };
 
