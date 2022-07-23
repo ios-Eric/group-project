@@ -1,0 +1,33 @@
+.second-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 998;
+  background-color: var(--xc-component-background);
+  padding: 8px;
+  height: 100%;
+  overflow: auto;
+}
+.second-header {
+  height: 48px;
+  line-height: 48px;
+}
+.second-footer {
+  height: 48px;
+  width: calc(~'100% + 16px');
+  position: absolute;
+  bottom: 0;
+  left: -8px;
+  background-color: var(--xc-component-background);
+  box-shadow: 0px -2px 8px 0px var(--xc-table-header-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0 24px;
+  z-index: 999;
+  button {
+    margin-left: 8px;
+  }
+}

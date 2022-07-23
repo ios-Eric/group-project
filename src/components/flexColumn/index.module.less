@@ -1,0 +1,32 @@
+// 弹性盒子
+.flexbox-V-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-four-content {
+  .flexbox-V-center;
+  .content-item {
+    min-height: 48px;
+    width: 25%;
+    padding: 0 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 1px solid var(--xc-border-color-base);
+    .item-value-box {
+      color: var(--xc-head-text-color);
+      .item-value {
+        font-size: 16px;
+        margin-right: 4px;
+        font-weight: bold;
+      }
+    }
+    .item-describe {
+      color: var(--xc-text-color);
+    }
+  }
+  .no-border {
+    border: none;
+  }
+}

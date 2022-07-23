@@ -6,25 +6,27 @@
  */
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
-import { DatePicker, Select, Input, InputNumber } from 'antd';
+import { DatePicker, Select, Input, InputNumber, Radio } from 'antd';
 import SearchSelect from '../searchSelect';
 import { getDictOptions } from '../formComponent/const.js';
 import NumberRange from './NumberRange';
+import TextFold from '../textFold';
 
 const { RangePicker }: { RangePicker: any } = DatePicker;
+const { TextArea } = Input;
 
-interface Iprops {
+export interface IItemControlProps {
   type: string;
   controlProps: any;
   dictProps?: any;
-  data?: any;
+  value?: any;
 }
 
-const ItemControl: React.FC<Iprops> = (props) => {
+const ItemControl: React.FC<IItemControlProps> = (props) => {
   const { type, controlProps, dictProps, ...rest } = props;
   const { dictKey, onlySelectData, delSelectData, disabledOption } =
     dictProps || {};
-  const { DICTS } = useSelector((state: any) => state.Common.DICTS);
+  const { DICTS } = useSelector((state: any) => state.publicData.DICTS);
 
   const autoItemProps = { ...controlProps };
 
@@ -41,10 +43,16 @@ const ItemControl: React.FC<Iprops> = (props) => {
   let children = <></>;
   switch (type) {
     case 'input':
-      children = <Input {...controlProps} {...rest} />;
+      children = <Input autoComplete="off" {...controlProps} {...rest} />;
       break;
     case 'select':
-      children = <Select {...autoItemProps} {...rest} />;
+      children = (
+        <Select
+          getPopupContainer={(triggerNode) => triggerNode.parentElement}
+          {...autoItemProps}
+          {...rest}
+        />
+      );
       break;
     case 'apiSelect':
       children = <SearchSelect {...controlProps} {...rest} />;
@@ -56,10 +64,20 @@ const ItemControl: React.FC<Iprops> = (props) => {
       children = <NumberRange {...controlProps} {...rest} />;
       break;
     case 'date':
-      children = <DatePicker {...controlProps} {...rest} />;
+      children = <DatePicker format="YYYY-MM-DD" {...controlProps} {...rest} />;
       break;
     case 'dateRange':
       children = <RangePicker {...controlProps} {...rest} />;
+      break;
+    case 'textArea':
+      children = <TextArea {...controlProps} {...rest} />;
+      break;
+    case 'textFold':
+      children = <TextFold {...controlProps} {...rest} />;
+      break;
+    case 'radio':
+      children = <Radio.Group {...controlProps} {...rest} />;
+      break;
   }
   return children;
 };

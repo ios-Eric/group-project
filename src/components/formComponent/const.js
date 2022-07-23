@@ -6,8 +6,8 @@
  */
 import moment from 'moment';
 import _ from 'lodash';
-import { getValue } from '../../utils/utils';
-import { formatDate } from '../../utils/dayjs';
+import { getValue } from '@/utils/utils';
+import { formatDate } from '@/utils/dayjs';
 
 // 设置控件的宽度为200px
 const controlItemWidth = '200px';
@@ -157,6 +157,44 @@ const refAutoFocus = (domRef) => {
   }
 };
 
+/**
+ * 获取字典对应的下拉选项
+ * @key 字典的对应 parentCodes 值
+ * @DICTS 字典数组
+ * @delSelectData 需要去除的option选项
+ * @onlySelectData 只需要展示option的选项
+ * @disabledOption 禁止选中option的选项
+ */
+const getDictOptions = ({
+  dictKey,
+  DICTS,
+  delSelectData,
+  onlySelectData,
+  disabledOption,
+}) => {
+  if (_.isEmpty(DICTS) || !dictKey) return [];
+  let selectOptions = [];
+  let itemKeys = Object.keys(DICTS?.[dictKey] || {});
+  if (!_.isEmpty(delSelectData)) {
+    itemKeys = itemKeys.filter((it) => !delSelectData.includes(it));
+  } else if (!_.isEmpty(onlySelectData)) {
+    itemKeys = [...onlySelectData];
+  }
+  selectOptions = itemKeys.map((it) => ({
+    label: DICTS[dictKey][it],
+    value: it,
+    key: it,
+    disabled: !_.isEmpty(disabledOption) && disabledOption.includes(`${it}`),
+  }));
+  itemKeys = null;
+  return selectOptions;
+};
+
+const formItemLayout = {
+  labelCol: { style: { width: '120px' } },
+  wrapperCol: { style: { lineHeight: '28px' } },
+};
+
 export {
   controlItemWidth,
   handleSearchParams,
@@ -169,4 +207,6 @@ export {
   formItemDefaultProps,
   updateSearchState,
   refAutoFocus,
+  getDictOptions,
+  formItemLayout,
 };

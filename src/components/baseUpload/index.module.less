@@ -1,0 +1,96 @@
+// 弹性盒子
+.flexbox-V-center {
+  display: flex;
+  align-items: center;
+}
+// 弹性盒垂直居中水平两端对齐
+.flexbox-H-between {
+  .flexbox-V-center;
+  justify-content: space-between;
+}
+// 弹性盒垂直水平居中对齐
+.flexbox-VH-center {
+  .flexbox-V-center;
+  justify-content: center;
+}
+
+// 单行文本溢出
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-button {
+  cursor: pointer;
+  padding: 2px 8px;
+}
+.upload-file-item {
+  .flexbox-H-between;
+  margin-top: 8px;
+  .file-item-content {
+    max-width: 80%;
+    color: var(--xc-primary-color);
+    .flexbox-V-center;
+    .file-item-icon {
+      font-size: 12px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .item-name-overflow {
+      .text-ellipsis;
+      max-width: 100%;
+    }
+  }
+  .file-item-option {
+    .flexbox-V-center;
+    justify-content: flex-end;
+    visibility: hidden;
+    .option-icon {
+      padding: 0 4px;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    background: var(--xc-select-item-hover-bg);
+    .file-item-option {
+      visibility: visible;
+    }
+  }
+}
+.tip-user-name {
+  margin-right: 4px;
+}
+
+.dragger-warp-bg {
+  width: 100%;
+  :global {
+    .ant-upload-drag {
+      background-color: var(--xc-table-header-bg) !important;
+    }
+  }
+  .upload-drag-content {
+    padding: 12px 32px;
+    .upload-file-icon {
+      font-size: 32px;
+      margin: 8px;
+      color: var(--xc-primary-color);
+    }
+    .upload-content-title {
+      color: var(--xc-head-text-color);
+      line-height: 20px;
+    }
+    .upload-content-des {
+      line-height: 20px;
+    }
+  }
+}
+
+.upload-button-box {
+  display: flex;
+  align-items: center;
+
+  .batch-upload-tip {
+    margin: 0 16px;
+  }
+}

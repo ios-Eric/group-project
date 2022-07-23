@@ -1,0 +1,44 @@
+// 弹性盒子
+.flexbox-V-center {
+  display: flex;
+  align-items: center;
+}
+// 单行省略
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.option-button {
+  padding: 0 4px;
+  margin-right: 0;
+}
+
+.limit-input-number {
+  display: flex;
+  width: 100%;
+}
+
+.table-content {
+  // padding: 8px;
+  width: 100%;
+}
+.table-pagination {
+  padding: 8px;
+  .flexbox-V-center;
+  justify-content: flex-end;
+}
+
+.option-text {
+  width: 100%;
+  .text-ellipsis;
+}
+
+.product-name-col {
+  .flexbox-V-center;
+  .product-name {
+    .text-ellipsis;
+    margin-right: 4px;
+  }
+}

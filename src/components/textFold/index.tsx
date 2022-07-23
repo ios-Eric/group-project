@@ -56,7 +56,7 @@ const TextFold: React.FC<IProps> = (props) => {
       }
       setOpacity(1);
     }
-  }, [lineHeight, linClamp]);
+  }, [lineHeight, linClamp, text]);
 
   const changeIsOpenState = () => {
     if (noExpandText && handleClick) {

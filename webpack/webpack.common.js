@@ -10,7 +10,7 @@ const _resolvePath = (url) => path.join(__dirname, url);
 
 module.exports = {
     stats: "none",
-    mode: "none",
+    mode: "development",
     entry: _resolvePath("../src/index.tsx"),
     output: {
         filename: "[name].[contenthash:10].js",
